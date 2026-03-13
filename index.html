@@ -190,12 +190,9 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;backgro
 // ══════════════════════════════════════════
 //  ANDHRA AF — CUSTOMER ORDER PAGE
 //  Real-time sync via Firebase Firestore
-//  All functions are global — onclick works
 // ══════════════════════════════════════════
 
 // ── PASTE YOUR FIREBASE CONFIG HERE ──────
-// Get it from: console.firebase.google.com
-// → Your project → Project Settings → Your apps → SDK setup
 const firebaseConfig = {
   apiKey: "AIzaSyCb6q295u36k-TjzPhGrZCmIsRc8hPeaLQ",
   authDomain: "andhraaf-87e82.firebaseapp.com",
@@ -206,61 +203,114 @@ const firebaseConfig = {
   measurementId: "G-VFXRFY1ZCG"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+// ── FIREBASE SETUP WITH CLEAR ERROR ──────
+let db = null;
+let firebaseReady = false;
+
+function showBanner(msg, isError){
+  let b = document.getElementById('aaf-banner');
+  if(!b){
+    b = document.createElement('div');
+    b.id = 'aaf-banner';
+    b.style.cssText = `position:fixed;top:0;left:0;right:0;z-index:9999;padding:0.7rem 1rem;
+      font-family:monospace;font-size:0.78rem;text-align:center;
+      background:${isError?'#CC2200':'#1A7A3C'};color:#fff;`;
+    document.body.prepend(b);
+  }
+  b.style.background = isError ? '#CC2200' : '#1A7A3C';
+  b.textContent = msg;
+  b.style.display = 'block';
+  if(!isError) setTimeout(() => b.style.display='none', 4000);
+}
+
+try {
+  const isPlaceholder = firebaseConfig.apiKey === "PASTE_YOUR_API_KEY";
+  if(isPlaceholder){
+    showBanner('⚠️ Firebase not configured — orders cannot be saved. Paste your Firebase config into the HTML file.', true);
+  } else {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    firebaseReady = true;
+  }
+} catch(e){
+  showBanner('⚠️ Firebase init failed: ' + e.message, true);
+  console.error('Firebase init error:', e);
+}
 
 // ── DATA ─────────────────────────────────
 const MENU = {
   nv: {
     Food: [
-      {id:'f1', name:'Podi-Pop Chicken',       price:180, desc:'Crispy chicken in Andhra podi masala'},
-      {id:'f2', name:'Avakaya Burger',          price:220, desc:'Spicy mango pickle chicken burger'},
-      {id:'f4', name:'Gongura Glazed Wings',    price:249, desc:'Tangy gongura sauce, crispy wings'},
-      {id:'f7', name:'7am Chicken Burrito',     price:159, desc:'Morning-spice chicken wrap'},
-      {id:'f9', name:'Nizami Keema Knot',       price:179, desc:'Spiced minced chicken in a pull roll'},
-      {id:'f11','name':'65-Block Burrito',      price:229, desc:'Chicken 65 meets Andhra spice burrito'},
+      {id:'f1',  name:'Podi-Pop Chicken',        price:180, desc:'Crispy chicken tossed in Andhra podi masala'},
+      {id:'f2',  name:'Avakaya Burger',           price:220, desc:'Spicy raw mango pickle chicken burger'},
+      {id:'f4',  name:'Gongura Glazed Wings',     price:249, desc:'Tangy gongura sauce on crispy wings'},
+      {id:'f7',  name:'7am Chicken Burrito',      price:159, desc:'Morning-spice chicken wrap with chutney'},
+      {id:'f9',  name:'Nizami Keema Knot',        price:179, desc:'Spiced minced chicken in a pull-apart roll'},
+      {id:'f11', name:'65-Block Burrito',         price:229, desc:'Chicken 65 meets Andhra spice in a burrito'},
+      {id:'f3',  name:'Kodi Vepudu Wrap',         price:199, desc:'Andhra-style dry chicken fry in a wrap'},
+      {id:'f5',  name:'Royyala Prawn Roll',       price:269, desc:'Spiced Andhra prawns in a soft roll'},
+      {id:'f6',  name:'Natukodi Slider',          price:189, desc:'Country chicken patty with gunpowder mayo'},
+      {id:'f8',  name:'Dum Keema Fries',          price:169, desc:'Minced chicken loaded over masala fries'},
+      {id:'f10', name:'Chicken Pesarattu Stack',  price:179, desc:'Chicken filling between crispy moong pancakes'},
+      {id:'f12', name:'Ragi Chicken Taco',        price:159, desc:'Finger millet taco shell with spiced chicken'},
     ],
     Drinks: [
-      {id:'d1', name:'Kobbari Caramel Shake',   price:149, desc:'Coconut-caramel cold shake'},
-      {id:'d3', name:'Godavari Rose Milk Float', price:139, desc:'Rose milk with vanilla float'},
-      {id:'d5', name:'Hyderabad Halkat Soda',   price:89,  desc:'Spicy masala soda'},
-      {id:'d8', name:'Chilled-out Majjiga',     price:79,  desc:'Cold spiced buttermilk'},
+      {id:'d1', name:'Kobbari Caramel Shake',    price:149, desc:'Coconut-caramel cold shake'},
+      {id:'d3', name:'Godavari Rose Milk Float',  price:139, desc:'Rose milk with vanilla ice cream float'},
+      {id:'d5', name:'Hyderabad Halkat Soda',    price:89,  desc:'Spicy masala soda, big flavour'},
+      {id:'d8', name:'Chilled-out Majjiga',      price:79,  desc:'Cold spiced buttermilk'},
+      {id:'d2', name:'Gongura Lemonade',         price:99,  desc:'Tangy sorrel leaf fresh lemonade'},
+      {id:'d4', name:'Ragi Java',                price:89,  desc:'Chilled finger millet drink with jeera'},
+      {id:'d6', name:'Tamarind Jaljeera',        price:79,  desc:'Tamarind-mint spiced cool drink'},
+      {id:'d7', name:'Natu Sugarcane Mint',      price:69,  desc:'Fresh sugarcane juice with mint & ginger'},
     ],
     Combos: [
-      {id:'c1', name:'Rayalaseema Heat (Combo)',price:239, desc:'Podi Pop + Halkat Soda + Fries'},
-      {id:'c3', name:'Midnight Masala Combo',   price:289, desc:'Wings + Rose Float + Fries'},
-      {id:'c7', name:'The All-Nighter',         price:349, desc:'Burrito + Burger + 2 Drinks'},
+      {id:'c1',  name:'Rayalaseema Heat',         price:239, desc:'Podi-Pop Chicken + Halkat Soda + Fries'},
+      {id:'c3',  name:'Midnight Masala',          price:289, desc:'Gongura Wings + Rose Float + Masala Fries'},
+      {id:'c7',  name:'The All-Nighter',          price:349, desc:'Burrito + Avakaya Burger + 2 Drinks'},
     ]
   },
   vg: {
     Food: [
-      {id:'v1', name:'Gobi Gunpowder Poppers',  price:169, desc:'Crispy cauliflower in podi masala'},
-      {id:'v2', name:'Avakaya Paneer Smash',    price:209, desc:'Mango pickle paneer burger'},
-      {id:'v4', name:'Gongura Cauliflower Wings',price:229,desc:'Tangy gongura cauliflower'},
-      {id:'v7', name:'Paneer Burji Burrito',    price:149, desc:'Spiced paneer scramble wrap'},
-      {id:'v9', name:'Rajma Nizami Knot',       price:169, desc:'Slow-cooked rajma pull roll'},
-      {id:'v10','name':'Tikka-Falafel Fusion',  price:199, desc:'Andhra spiced falafel patty'},
+      {id:'v1',  name:'Gobi Gunpowder Poppers',  price:169, desc:'Crispy cauliflower in Andhra podi masala'},
+      {id:'v2',  name:'Avakaya Paneer Smash',    price:209, desc:'Mango pickle paneer burger'},
+      {id:'v4',  name:'Gongura Cauliflower Wings',price:229, desc:'Tangy gongura glazed cauliflower'},
+      {id:'v7',  name:'Paneer Burji Burrito',    price:149, desc:'Spiced paneer scramble in a flour wrap'},
+      {id:'v9',  name:'Rajma Nizami Knot',       price:169, desc:'Slow-cooked rajma in a pull-apart roll'},
+      {id:'v10', name:'Tikka-Falafel Fusion',    price:199, desc:'Andhra spiced falafel with tikka chutney'},
+      {id:'v3',  name:'Pesarattu Stack',         price:159, desc:'Crispy moong pancake stack with ginger chutney'},
+      {id:'v5',  name:'Mushroom Vepudu Wrap',    price:189, desc:'Andhra dry-fried mushroom in a soft wrap'},
+      {id:'v6',  name:'Methi Paneer Slider',     price:179, desc:'Fenugreek-spiced paneer patty slider'},
+      {id:'v8',  name:'Ragi Falafel Taco',       price:159, desc:'Finger millet taco with spiced falafel'},
+      {id:'v11', name:'Corn Halwa Snack Box',    price:149, desc:'Savory Andhra-style corn bites with chutney'},
+      {id:'v12', name:'Dal Tadka Loaded Fries',  price:169, desc:'Crispy fries loaded with smoky dal tadka'},
     ],
     Drinks: [
-      {id:'d1', name:'Kobbari Caramel Shake',   price:149, desc:'Coconut-caramel cold shake'},
-      {id:'d3', name:'Godavari Rose Milk Float', price:139, desc:'Rose milk with vanilla float'},
-      {id:'d5', name:'Hyderabad Halkat Soda',   price:89,  desc:'Spicy masala soda'},
-      {id:'d8', name:'Chilled-out Majjiga',     price:79,  desc:'Cold spiced buttermilk'},
+      {id:'d1', name:'Kobbari Caramel Shake',    price:149, desc:'Coconut-caramel cold shake'},
+      {id:'d3', name:'Godavari Rose Milk Float',  price:139, desc:'Rose milk with vanilla ice cream float'},
+      {id:'d5', name:'Hyderabad Halkat Soda',    price:89,  desc:'Spicy masala soda, big flavour'},
+      {id:'d8', name:'Chilled-out Majjiga',      price:79,  desc:'Cold spiced buttermilk'},
+      {id:'d2', name:'Gongura Lemonade',         price:99,  desc:'Tangy sorrel leaf fresh lemonade'},
+      {id:'d4', name:'Ragi Java',                price:89,  desc:'Chilled finger millet drink with jeera'},
+      {id:'d6', name:'Tamarind Jaljeera',        price:79,  desc:'Tamarind-mint spiced cool drink'},
+      {id:'d7', name:'Natu Sugarcane Mint',      price:69,  desc:'Fresh sugarcane juice with mint & ginger'},
     ],
     Combos: [
-      {id:'vc1', name:'The Green Rayalaseema',  price:219, desc:'Gobi Poppers + Majjiga + Fries'},
-      {id:'vc2', name:'Garden Cinema Combo',    price:289, desc:'Paneer Smash + Rose Float + Fries'},
-      {id:'vc4', name:'Rajma All-Nighter',      price:279, desc:'Rajma Knot + Burrito + 2 Drinks'},
+      {id:'vc1', name:'The Green Rayalaseema',   price:219, desc:'Gobi Poppers + Majjiga + Masala Fries'},
+      {id:'vc2', name:'Garden Cinema Combo',     price:289, desc:'Paneer Smash + Rose Float + Fries'},
+      {id:'vc4', name:'Rajma All-Nighter',       price:279, desc:'Rajma Knot + Paneer Burrito + 2 Drinks'},
     ]
   }
 };
 
 // Ingredient map for inventory
 const ING_MAP = {
-  f1:{chicken_breast:150},f2:{chicken_breast:120,bread_buns:1},f4:{chicken_wings:200,gongura:30},
-  f7:{chicken_breast:100,tortilla:1},f9:{chicken_breast:130},f11:{chicken_breast:150},
-  v1:{cauliflower:200},v2:{paneer:120,bread_buns:1},v4:{cauliflower:220,gongura:30},
-  v7:{paneer:130,tortilla:1},v9:{rajma:150},v10:{dal:80},
+  f1:{chicken_breast:150},f2:{chicken_breast:120},f3:{chicken_breast:120},
+  f4:{chicken_wings:200,gongura:30},f5:{chicken_breast:180},f6:{chicken_breast:150},
+  f7:{chicken_breast:100},f8:{chicken_breast:130},f9:{chicken_breast:130},
+  f10:{chicken_breast:120},f11:{chicken_breast:150},f12:{chicken_breast:100},
+  v1:{cauliflower:200},v2:{paneer:120},v3:{},v4:{cauliflower:220,gongura:30},
+  v5:{},v6:{paneer:130},v7:{paneer:130},v8:{},v9:{rajma:150},v10:{},v11:{},v12:{},
   c1:{chicken_breast:150},c3:{chicken_wings:200},c7:{chicken_breast:150},
   vc1:{cauliflower:200},vc2:{paneer:120},vc4:{rajma:150},
 };
@@ -274,7 +324,7 @@ let unsubscribeTracker = null;
 
 function setDiet(d){
   diet = d;
-  cart = {};
+  // DO NOT clear cart — customer can browse NV + Veg and mix freely
   document.getElementById('dt-nv').className = 'dt-opt nv' + (d==='nv'?' act':'');
   document.getElementById('dt-vg').className = 'dt-opt vg' + (d==='vg'?' act':'');
   renderMenu();
@@ -310,19 +360,20 @@ function renderMenu(){
   Object.entries(cats).forEach(([cat, items]) => {
     const sec = document.createElement('div');
     sec.className = 'section pb';
+    const dotClass = diet === 'nv' ? 'nv' : 'vg';
     let html = `<div class="sec-title">${cat}</div><div class="menu-grid">`;
     items.forEach(item => {
       const qty = cart[item.id] || 0;
       html += `
         <div class="menu-card${qty>0?' in-cart':''}" id="mc-${item.id}">
-          <div class="mc-dot ${diet}"></div>
+          <div class="mc-dot ${dotClass}"></div>
           <div class="mc-info">
             <div class="mc-name">${item.name}</div>
             <div class="mc-desc">${item.desc}</div>
           </div>
-          <div class="mc-price">₹${item.price}</div>
+          <div class="mc-price">&#x20B9;${item.price}</div>
           <div class="mc-qty">
-            <button class="mqb" onclick="adj('${item.id}',-1)">−</button>
+            <button class="mqb" onclick="adj('${item.id}',-1)">&#x2212;</button>
             <span class="mqn">${qty}</span>
             <button class="mqb add" onclick="adj('${item.id}',1)">+</button>
           </div>
@@ -332,14 +383,37 @@ function renderMenu(){
     sec.innerHTML = html;
     root.appendChild(sec);
   });
+  // Cross-diet cart notice
+  const nvItemIds = new Set(Object.values(MENU.nv).flat().map(i=>i.id));
+  const vgOnlyItemIds = new Set(Object.values(MENU.vg).flat().map(i=>i.id).filter(id=>!nvItemIds.has(id)));
+  const hasNV = Object.keys(cart).some(id => nvItemIds.has(id));
+  const hasVG = Object.keys(cart).some(id => vgOnlyItemIds.has(id));
+  let notice = document.getElementById('cross-diet-notice');
+  if(hasNV && hasVG){
+    if(!notice){
+      notice = document.createElement('div');
+      notice.id = 'cross-diet-notice';
+      notice.style.cssText = 'background:#FFF3EF;border:1px solid rgba(232,52,10,0.3);border-radius:8px;padding:0.5rem 1rem;margin:0 1.2rem 0.5rem;font-size:0.72rem;color:#8A4020;font-weight:600;';
+    }
+    notice.textContent = '\u{1F6D2} Your cart has both NV & Veg items \u2014 all will be included in your order.';
+    root.insertBefore(notice, root.firstChild);
+  }
 }
 
 function getAllItems(){
-  const cats = MENU[diet];
-  const all = Object.values(cats).flat();
+  // Search across BOTH diets so cart survives tab switching
+  const allItems = [
+    ...Object.values(MENU.nv).flat(),
+    ...Object.values(MENU.vg).flat(),
+  ];
+  // Dedupe by id (drinks shared between diets)
+  const seen = new Set();
+  const unique = allItems.filter(i => { if(seen.has(i.id)) return false; seen.add(i.id); return true; });
   return Object.entries(cart).map(([id, qty]) => {
-    const item = all.find(i => i.id === id);
-    return item ? { ...item, qty, diet } : null;
+    const item = unique.find(i => i.id === id);
+    // Tag each item with its diet for the dot color
+    const itemDiet = MENU.nv && Object.values(MENU.nv).flat().find(i => i.id === id) ? 'nv' : 'vg';
+    return item ? { ...item, qty, diet: itemDiet } : null;
   }).filter(Boolean);
 }
 
@@ -352,9 +426,12 @@ function updateSummary(){
   const tax = Math.round(sub * 0.05);
   const grand = sub + tax;
   bar.style.display = 'block';
-  bar.innerHTML = items.map(i =>
-    `<div class="sb-row"><span>${i.name} ×${i.qty}</span><span>₹${i.price*i.qty}</span></div>`
-  ).join('') +
+  bar.innerHTML = items.map(i => {
+    const tag = i.diet === 'nv'
+      ? `<span style="font-size:0.55rem;background:#E8340A;color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle;">NV</span>`
+      : `<span style="font-size:0.55rem;background:#1A7A3C;color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle;">VG</span>`;
+    return `<div class="sb-row"><span>${i.name}${tag} ×${i.qty}</span><span>₹${i.price*i.qty}</span></div>`;
+  }).join('') +
   `<div class="sb-row"><span>GST (5%)</span><span>₹${tax}</span></div>
    <div class="sb-total"><span>Total</span><span>₹${grand}</span></div>`;
   btn.disabled = false;
@@ -369,6 +446,12 @@ async function placeOrder(){
   const items = getAllItems();
   if(!items.length) return;
 
+  // ── CHECK FIREBASE IS READY ───────────
+  if(!firebaseReady || !db){
+    showBanner('⚠️ Firebase not configured yet — please paste your Firebase config into the HTML file first.', true);
+    return;
+  }
+
   const btn = document.getElementById('place-btn');
   btn.disabled = true;
   btn.textContent = '⏳ Placing...';
@@ -381,7 +464,6 @@ async function placeOrder(){
   sessionStorage.setItem('aaf_ordercount', orderCount);
   const token = 'AF-' + String(1000 + orderCount);
 
-  // Build ingredient usage
   let ingUsage = {};
   items.forEach(item => {
     const ings = ING_MAP[item.id] || {};
@@ -403,36 +485,42 @@ async function placeOrder(){
     diet,
     status: 'new',
     placedAt: Date.now(),
-    placedAtServer: firebase.firestore.FieldValue.serverTimestamp(),
     eta: 15,
     ingUsage,
   };
 
   try {
-    // ── WRITE TO FIRESTORE ────────────────
-    // Owner dashboard gets this in real time via onSnapshot listener
     const docRef = await db.collection('orders').add(order);
     currentOrderToken = token;
 
-    // Show success modal
+    // ── SUCCESS — show confirmation modal ─
     document.getElementById('m-tok').textContent = token;
     document.getElementById('m-sub').textContent =
       `${items.map(i=>i.name+' ×'+i.qty).join(', ')} · ₹${grand} · ${payment.toUpperCase()}`;
     document.getElementById('modal').classList.add('show');
 
-    // Live-track this order's status from Firestore
     startLiveTracking(docRef.id);
 
-    // Reset cart
     cart = {};
     renderMenu();
     updateSummary();
     document.getElementById('ci-name').value = '';
     document.getElementById('ci-phone').value = '';
     document.getElementById('ci-notes').value = '';
+
   } catch(err) {
-    alert('Could not place order — please check your connection and try again.\n\n' + err.message);
-    console.error(err);
+    // ── SHOW EXACT ERROR SO YOU KNOW WHAT'S WRONG ─
+    let msg = '❌ Order failed: ' + err.message;
+    if(err.code === 'permission-denied')
+      msg = '❌ Firestore permission denied — go to Firebase Console → Firestore → Rules and set: allow read, write: if true;';
+    else if(err.code === 'unavailable' || err.message.includes('network'))
+      msg = '❌ No internet connection. Please check your network and try again.';
+    else if(err.message.includes('projectId') || err.message.includes('app/no-app'))
+      msg = '❌ Firebase config is wrong — double check your projectId and apiKey.';
+    showBanner(msg, true);
+    console.error('placeOrder error:', err);
+    orderCount--; // roll back token counter
+    sessionStorage.setItem('aaf_ordercount', orderCount);
   }
 
   btn.disabled = false;
