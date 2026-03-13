@@ -1,448 +1,494 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>Andhra AF — Order Now 🌶️</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-:root{
-  --fire:#E8340A;--gold:#C8881A;--cream:#FDF6ED;--dark:#1A0F05;
-  --panel:#FFFFFF;--border:#EDE0CF;--text:#3D2408;--muted:#8A7060;
-  --green:#1A7A3C;--red:#CC2200;
-  --shadow:0 2px 16px rgba(60,20,0,0.10);
-}
-html{background:#F5ECD8;scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;background:#F5ECD8;}
-
-/* ── HERO ── */
-.hero{background:var(--dark);padding:1.5rem 1.2rem 1.2rem;text-align:center;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 120%,rgba(232,52,10,0.3),transparent 70%);pointer-events:none;}
-.hero-fire{font-size:2rem;display:block;margin-bottom:0.3rem;}
-.hero-name{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:0.1em;color:#FDF6ED;line-height:1;margin-bottom:0.15rem;}
-.hero-name span{color:var(--fire);}
-.hero-tag{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(253,246,237,0.45);margin-bottom:0.5rem;}
-.hero-loc{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:0.22rem 0.65rem;border-radius:20px;font-size:0.7rem;color:rgba(253,246,237,0.6);}
-
-/* ── DIET TOGGLE ── */
-.diet-wrap{background:#FDF6ED;border-bottom:1px solid var(--border);padding:0.75rem 1.2rem;}
-.diet-toggle{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;}
-.dt-opt{padding:0.55rem;text-align:center;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.2s;color:var(--muted);background:transparent;}
-.dt-opt.act.nv{background:var(--fire);color:#fff;}
-.dt-opt.act.vg{background:var(--green);color:#fff;}
-
-/* ── SECTION ── */
-.section{padding:1rem 1.2rem 0;}
-.sec-title{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.08em;color:var(--dark);margin-bottom:0.65rem;display:flex;align-items:center;gap:0.4rem;}
-.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
-
-/* ── MENU CARDS ── */
-.menu-grid{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.5rem;}
-.menu-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:0.75rem 0.9rem;display:flex;align-items:center;gap:0.7rem;box-shadow:var(--shadow);transition:all 0.18s;}
-.mc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-.mc-dot.nv{background:var(--fire);border:1.5px solid #C02000;}
-.mc-dot.vg{background:var(--green);border:1.5px solid #0F6030;}
-.mc-info{flex:1;min-width:0;}
-.mc-name{font-size:0.88rem;font-weight:600;color:var(--dark);margin-bottom:0.08rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.mc-desc{font-size:0.65rem;color:var(--muted);line-height:1.4;}
-.mc-price{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;color:var(--gold);letter-spacing:0.04em;flex-shrink:0;margin-right:0.4rem;}
-.mc-qty{display:flex;align-items:center;gap:0;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;flex-shrink:0;}
-.mqb{background:transparent;border:none;color:var(--muted);width:30px;height:30px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
-.mqb:active{background:#F5ECD8;}
-.mqb.add{color:var(--fire);}
-.mqn{font-size:0.8rem;font-weight:600;min-width:22px;text-align:center;color:var(--dark);}
-.menu-card.in-cart{border-color:var(--fire);background:linear-gradient(135deg,#FFF8F5,#FFFFFF);}
-
-/* ── CUSTOMER INFO ── */
-.cust-section{padding:1rem 1.2rem;}
-.ci-field{margin-bottom:0.6rem;}
-.ci-lbl{font-size:0.7rem;font-weight:600;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.3rem;display:block;}
-.ci-inp{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.85rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;transition:border-color 0.15s;}
-.ci-inp:focus{border-color:var(--fire);}
-.ci-inp::placeholder{color:#C0B0A0;}
-
-/* ── ORDER SUMMARY ── */
-.summary-bar{margin:0 1.2rem 0.8rem;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:0.75rem;box-shadow:var(--shadow);}
-.sb-row{display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:0.2rem;color:var(--muted);}
-.sb-total{display:flex;justify-content:space-between;padding-top:0.5rem;border-top:1px dashed var(--border);margin-top:0.3rem;}
-.sb-total span:first-child{font-weight:600;font-size:0.9rem;color:var(--dark);}
-.sb-total span:last-child{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--fire);letter-spacing:0.04em;}
-
-/* ── PLACE BTN ── */
-.place-wrap{padding:0 1.2rem 2rem;}
-.place-btn{width:100%;background:var(--fire);border:none;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:0.15em;padding:0.9rem;border-radius:10px;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px rgba(232,52,10,0.35);}
-.place-btn:active{transform:scale(0.98);}
-.place-btn:disabled{background:#C0B0A0;box-shadow:none;cursor:not-allowed;}
-
-/* ── SUCCESS MODAL ── */
-.modal-bg{position:fixed;inset:0;background:rgba(26,15,5,0.75);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:1.5rem;}
-.modal-bg.show{display:flex;}
-.modal{background:var(--panel);border-radius:16px;padding:2rem 1.5rem;text-align:center;max-width:340px;width:100%;animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}
-@keyframes popIn{from{transform:scale(0.7);opacity:0;}to{transform:scale(1);opacity:1;}}
-.modal-fire{font-size:2.5rem;margin-bottom:0.5rem;}
-.modal-tok{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--fire);letter-spacing:0.1em;line-height:1;}
-.modal-title{font-size:1rem;font-weight:600;color:var(--dark);margin:0.4rem 0 0.15rem;}
-.modal-sub{font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:1.2rem;}
-.modal-track{background:#F5ECD8;border-radius:10px;padding:0.8rem;margin-bottom:1.2rem;}
-.track-steps{display:flex;justify-content:space-between;position:relative;}
-.track-steps::before{content:'';position:absolute;top:14px;left:14px;right:14px;height:2px;background:var(--border);}
-.ts{display:flex;flex-direction:column;align-items:center;gap:0.25rem;flex:1;position:relative;z-index:1;}
-.ts-dot{width:28px;height:28px;border-radius:50%;background:#EDE0CF;display:flex;align-items:center;justify-content:center;font-size:0.75rem;transition:all 0.3s;}
-.ts-dot.act{background:var(--fire);color:#fff;box-shadow:0 0 0 4px rgba(232,52,10,0.15);}
-.ts-dot.done{background:var(--green);color:#fff;}
-.ts-lbl{font-size:0.5rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);text-align:center;line-height:1.3;}
-.modal-close{width:100%;background:var(--dark);color:#fff;border:none;border-radius:8px;padding:0.65rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;}
-
-/* ── PAYMENT ── */
-.pay-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem;margin-bottom:0.6rem;}
-.pay-opt{border:1.5px solid var(--border);border-radius:8px;padding:0.5rem;text-align:center;cursor:pointer;transition:all 0.15s;}
-.pay-opt.sel{border-color:var(--fire);background:#FFF3EF;}
-.pay-opt span{display:block;font-size:0.9rem;margin-bottom:0.15rem;}
-.pay-opt p{font-size:0.62rem;color:var(--muted);font-weight:600;}
-
-/* ── EMPTY STATE ── */
-.empty{text-align:center;padding:2rem 1rem;color:var(--muted);}
-.empty-icon{font-size:2.5rem;display:block;margin-bottom:0.5rem;opacity:0.5;}
-.empty-txt{font-size:0.82rem;}
-
-.pb{padding-bottom:0.5rem;}
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
 </head>
 <body>
-
-<!-- HERO -->
-<div class="hero">
-  <span class="hero-fire">🌶️</span>
-  <div class="hero-name">Andhra<span>AF</span></div>
-  <div class="hero-tag">Jubilee Hills Food Court · Hyderabad</div>
-  <div class="hero-loc">📍 Andhra Pradesh Inspired Street Food</div>
-</div>
-
-<!-- DIET TOGGLE -->
-<div class="diet-wrap">
-  <div class="diet-toggle">
-    <div class="dt-opt nv act" id="dt-nv" onclick="setDiet('nv')">🍗 Non-Veg</div>
-    <div class="dt-opt vg" id="dt-vg" onclick="setDiet('vg')">🌿 Veg</div>
-  </div>
-</div>
-
-<!-- MENU will be injected here by JS -->
-<div id="menu-root"></div>
-
-<!-- CUSTOMER INFO -->
-<div class="cust-section">
-  <div class="sec-title">Your Details</div>
-  <div class="ci-field">
-    <label class="ci-lbl">Your Name</label>
-    <input class="ci-inp" id="ci-name" placeholder="e.g. Priya" maxlength="40"/>
-  </div>
-  <div class="ci-field">
-    <label class="ci-lbl">Phone Number</label>
-    <input class="ci-inp" id="ci-phone" type="tel" placeholder="+91 XXXXX XXXXX" maxlength="15"/>
-  </div>
-  <div class="ci-field">
-    <label class="ci-lbl">Payment</label>
-    <div class="pay-opts">
-      <div class="pay-opt sel" id="pay-upi" onclick="setPay('upi',this)"><span>📲</span><p>UPI</p></div>
-      <div class="pay-opt" id="pay-card" onclick="setPay('card',this)"><span>💳</span><p>Card</p></div>
-      <div class="pay-opt" id="pay-counter" onclick="setPay('counter',this)"><span>🏷️</span><p>Counter</p></div>
-    </div>
-  </div>
-  <div class="ci-field">
-    <label class="ci-lbl">Special Requests <span style="font-weight:400;text-transform:none;">(optional)</span></label>
-    <input class="ci-inp" id="ci-notes" placeholder="e.g. Less spicy please" maxlength="100"/>
-  </div>
-</div>
-
-<!-- SUMMARY -->
-<div class="summary-bar" id="summary-bar" style="display:none;"></div>
-
-<!-- PLACE -->
-<div class="place-wrap">
-  <button class="place-btn" id="place-btn" disabled onclick="placeOrder()">🔥 Place Order</button>
-</div>
-
-<!-- SUCCESS MODAL -->
-<div class="modal-bg" id="modal">
-  <div class="modal">
-    <div class="modal-fire">🎉</div>
-    <div class="modal-tok" id="m-tok">AF-0000</div>
-    <div class="modal-title">Order Placed! Show this token at pickup.</div>
-    <div class="modal-sub" id="m-sub">Preparing your food now.</div>
-    <div class="modal-track">
-      <div class="track-steps">
-        <div class="ts"><div class="ts-dot act" id="ts0">✓</div><div class="ts-lbl">Confirmed</div></div>
-        <div class="ts"><div class="ts-dot" id="ts1">🍳</div><div class="ts-lbl">Preparing</div></div>
-        <div class="ts"><div class="ts-dot" id="ts2">🛎</div><div class="ts-lbl">Ready</div></div>
-        <div class="ts"><div class="ts-dot" id="ts3">✅</div><div class="ts-lbl">Picked up</div></div>
-      </div>
-    </div>
-    <button class="modal-close" onclick="closeModal()">Close & Order More</button>
-  </div>
-</div>
-
-<script>
-// ══════════════════════════════════════════
-//  ANDHRA AF — CUSTOMER ORDER PAGE
-//  Shares orders via localStorage + BroadcastChannel
-//  so owner dashboard receives them in real time
-// ══════════════════════════════════════════
-
-const MENU = {
-  nv: {
-    Food: [
-      {id:'f1', name:'Podi-Pop Chicken',       price:180, desc:'Crispy chicken in Andhra podi masala'},
-      {id:'f2', name:'Avakaya Burger',          price:220, desc:'Spicy mango pickle chicken burger'},
-      {id:'f4', name:'Gongura Glazed Wings',    price:249, desc:'Tangy gongura sauce, crispy wings'},
-      {id:'f7', name:'7am Chicken Burrito',     price:159, desc:'Morning-spice chicken wrap'},
-      {id:'f9', name:'Nizami Keema Knot',       price:179, desc:'Spiced minced chicken in a pull roll'},
-      {id:'f11','name':'65-Block Burrito',      price:229, desc:'Chicken 65 meets Andhra spice burrito'},
-    ],
-    Drinks: [
-      {id:'d1', name:'Kobbari Caramel Shake',   price:149, desc:'Coconut-caramel cold shake'},
-      {id:'d3', name:'Godavari Rose Milk Float', price:139, desc:'Rose milk with vanilla float'},
-      {id:'d5', name:'Hyderabad Halkat Soda',   price:89,  desc:'Spicy masala soda'},
-      {id:'d8', name:'Chilled-out Majjiga',     price:79,  desc:'Cold spiced buttermilk'},
-    ],
-    Combos: [
-      {id:'c1', name:'Rayalaseema Heat (Combo)',price:239, desc:'Podi Pop + Halkat Soda + Fries'},
-      {id:'c3', name:'Midnight Masala Combo',   price:289, desc:'Wings + Rose Float + Fries'},
-      {id:'c7', name:'The All-Nighter',         price:349, desc:'Burrito + Burger + 2 Drinks'},
-    ]
-  },
-  vg: {
-    Food: [
-      {id:'v1', name:'Gobi Gunpowder Poppers',  price:169, desc:'Crispy cauliflower in podi masala'},
-      {id:'v2', name:'Avakaya Paneer Smash',    price:209, desc:'Mango pickle paneer burger'},
-      {id:'v4', name:'Gongura Cauliflower Wings',price:229,desc:'Tangy gongura cauliflower'},
-      {id:'v7', name:'Paneer Burji Burrito',    price:149, desc:'Spiced paneer scramble wrap'},
-      {id:'v9', name:'Rajma Nizami Knot',       price:169, desc:'Slow-cooked rajma pull roll'},
-      {id:'v10','name':'Tikka-Falafel Fusion',  price:199, desc:'Andhra spiced falafel patty'},
-    ],
-    Drinks: [
-      {id:'d1', name:'Kobbari Caramel Shake',   price:149, desc:'Coconut-caramel cold shake'},
-      {id:'d3', name:'Godavari Rose Milk Float', price:139, desc:'Rose milk with vanilla float'},
-      {id:'d5', name:'Hyderabad Halkat Soda',   price:89,  desc:'Spicy masala soda'},
-      {id:'d8', name:'Chilled-out Majjiga',     price:79,  desc:'Cold spiced buttermilk'},
-    ],
-    Combos: [
-      {id:'vc1', name:'The Green Rayalaseema',  price:219, desc:'Gobi Poppers + Majjiga + Fries'},
-      {id:'vc2', name:'Garden Cinema Combo',    price:289, desc:'Paneer Smash + Rose Float + Fries'},
-      {id:'vc4', name:'Rajma All-Nighter',      price:279, desc:'Rajma Knot + Burrito + 2 Drinks'},
-    ]
-  }
-};
-
-// Ingredient map for inventory
-const ING_MAP = {
-  f1:{chicken_breast:150},f2:{chicken_breast:120,bread_buns:1},f4:{chicken_wings:200,gongura:30},
-  f7:{chicken_breast:100,tortilla:1},f9:{chicken_breast:130},f11:{chicken_breast:150},
-  v1:{cauliflower:200},v2:{paneer:120,bread_buns:1},v4:{cauliflower:220,gongura:30},
-  v7:{paneer:130,tortilla:1},v9:{rajma:150},v10:{dal:80},
-  c1:{chicken_breast:150},c3:{chicken_wings:200},c7:{chicken_breast:150},
-  vc1:{cauliflower:200},vc2:{paneer:120},vc4:{rajma:150},
-};
-
-let diet = 'nv';
-let cart = {};
-let payment = 'upi';
-let orderCount = parseInt(localStorage.getItem('aaf_ordercount') || '0');
-
-// BroadcastChannel so owner page hears orders instantly (same browser)
-let bc;
-try { bc = new BroadcastChannel('andhraaF_orders'); } catch(e) {}
-
-function setDiet(d){
-  diet = d;
-  cart = {};
-  document.getElementById('dt-nv').className = 'dt-opt nv' + (d==='nv'?' act':'');
-  document.getElementById('dt-vg').className = 'dt-opt vg' + (d==='vg'?' act':'');
-  renderMenu();
-  updateSummary();
-}
-
-function setPay(p, el){
-  payment = p;
-  document.querySelectorAll('.pay-opt').forEach(x => x.classList.remove('sel'));
-  el.classList.add('sel');
-}
-
-function adj(id, delta){
-  if(!cart[id]) cart[id] = 0;
-  cart[id] = Math.max(0, cart[id] + delta);
-  if(cart[id] === 0) delete cart[id];
-  updateCardQty(id);
-  updateSummary();
-}
-
-function updateCardQty(id){
-  const el = document.getElementById('mc-' + id);
-  if(!el) return;
-  const qty = cart[id] || 0;
-  el.querySelector('.mqn').textContent = qty;
-  el.classList.toggle('in-cart', qty > 0);
-}
-
-function renderMenu(){
-  const root = document.getElementById('menu-root');
-  root.innerHTML = '';
-  const cats = MENU[diet];
-  Object.entries(cats).forEach(([cat, items]) => {
-    const sec = document.createElement('div');
-    sec.className = 'section pb';
-    let html = `<div class="sec-title">${cat}</div><div class="menu-grid">`;
-    items.forEach(item => {
-      const qty = cart[item.id] || 0;
-      html += `
-        <div class="menu-card${qty>0?' in-cart':''}" id="mc-${item.id}">
-          <div class="mc-dot ${diet}"></div>
-          <div class="mc-info">
-            <div class="mc-name">${item.name}</div>
-            <div class="mc-desc">${item.desc}</div>
-          </div>
-          <div class="mc-price">₹${item.price}</div>
-          <div class="mc-qty">
-            <button class="mqb" onclick="adj('${item.id}',-1)">−</button>
-            <span class="mqn">${qty}</span>
-            <button class="mqb add" onclick="adj('${item.id}',1)">+</button>
-          </div>
-        </div>`;
-    });
-    html += '</div>';
-    sec.innerHTML = html;
-    root.appendChild(sec);
-  });
-}
-
-function getAllItems(){
-  const cats = MENU[diet];
-  const all = Object.values(cats).flat();
-  return Object.entries(cart).map(([id, qty]) => {
-    const item = all.find(i => i.id === id);
-    return item ? { ...item, qty, diet } : null;
-  }).filter(Boolean);
-}
-
-function updateSummary(){
-  const items = getAllItems();
-  const bar = document.getElementById('summary-bar');
-  const btn = document.getElementById('place-btn');
-  if(!items.length){ bar.style.display='none'; btn.disabled=true; return; }
-  const sub = items.reduce((s,i) => s+i.price*i.qty, 0);
-  const tax = Math.round(sub * 0.05);
-  const grand = sub + tax;
-  bar.style.display = 'block';
-  bar.innerHTML = items.map(i =>
-    `<div class="sb-row"><span>${i.name} ×${i.qty}</span><span>₹${i.price*i.qty}</span></div>`
-  ).join('') +
-  `<div class="sb-row"><span>GST (5%)</span><span>₹${tax}</span></div>
-   <div class="sb-total"><span>Total</span><span>₹${grand}</span></div>`;
-  btn.disabled = false;
-}
-
-function placeOrder(){
-  const name = document.getElementById('ci-name').value.trim();
-  const phone = document.getElementById('ci-phone').value.trim();
-  const notes = document.getElementById('ci-notes').value.trim();
-  if(!name){ document.getElementById('ci-name').focus(); alert('Please enter your name'); return; }
-
-  const items = getAllItems();
-  if(!items.length) return;
-
-  const sub = items.reduce((s,i) => s+i.price*i.qty, 0);
-  const tax = Math.round(sub * 0.05);
-  const grand = sub + tax;
-
-  orderCount++;
-  localStorage.setItem('aaf_ordercount', orderCount);
-  const token = 'AF-' + String(1000 + orderCount);
-
-  // Build ingredient usage
-  let ingUsage = {};
-  items.forEach(item => {
-    const ings = ING_MAP[item.id] || {};
-    Object.entries(ings).forEach(([k,v]) => {
-      ingUsage[k] = (ingUsage[k]||0) + v * item.qty;
-    });
-  });
-
-  const order = {
-    id: Date.now(),
-    token,
-    name: name || 'Customer',
-    phone,
-    items,
-    subtotal: sub,
-    tax,
-    grand,
-    payment,
-    notes,
-    diet,
-    status: 'new',
-    placedAt: Date.now(),
-    eta: 15, // minutes
-    ingUsage,
-  };
-
-  // Save to localStorage so owner page can read
-  const existing = JSON.parse(localStorage.getItem('aaf_orders') || '[]');
-  existing.unshift(order);
-  localStorage.setItem('aaf_orders', JSON.stringify(existing.slice(0, 50)));
-
-  // Broadcast to owner page
-  try { if(bc) bc.postMessage({ type: 'NEW_ORDER', order }); } catch(e){}
-
-  // Show success modal
-  document.getElementById('m-tok').textContent = token;
-  document.getElementById('m-sub').textContent =
-    `${items.map(i=>i.name+' ×'+i.qty).join(', ')} · ₹${grand} · ${payment.toUpperCase()}`;
-  document.getElementById('modal').classList.add('show');
-
-  // Animate tracking
-  simulateTracking(order);
-
-  // Reset cart
-  cart = {};
-  renderMenu();
-  updateSummary();
-  document.getElementById('ci-name').value = '';
-  document.getElementById('ci-phone').value = '';
-  document.getElementById('ci-notes').value = '';
-}
-
-let trackInterval;
-function simulateTracking(order){
-  // Reset dots
-  for(let i=0;i<4;i++){
-    document.getElementById('ts'+i).className='ts-dot'+(i===0?' done':'');
-  }
-  let step = 1;
-  clearInterval(trackInterval);
-  // Try to listen for status updates from owner page
-  const checkStatus = () => {
-    const orders = JSON.parse(localStorage.getItem('aaf_orders') || '[]');
-    const live = orders.find(o => o.token === order.token);
-    if(live){
-      const s = live.status;
-      const stepMap = {new:0,preparing:1,ready:2,done:3};
-      const sStep = stepMap[s] ?? 0;
-      for(let i=0;i<4;i++){
-        const dot = document.getElementById('ts'+i);
-        if(dot) dot.className='ts-dot'+(i<sStep?'done':i===sStep?'act':'');
-      }
-    }
-  };
-  trackInterval = setInterval(checkStatus, 2000);
-}
-
-function closeModal(){
-  document.getElementById('modal').classList.remove('show');
-  clearInterval(trackInterval);
-}
-
-// Init
-renderMenu();
-</script>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"/&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/&gt;</p>
+<p class="p1">&lt;title&gt;Andhra AF — Order Now 🌶️&lt;/title&gt;</p>
+<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}</p>
+<p class="p1">:root{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--fire:#E8340A;--gold:#C8881A;--cream:#FDF6ED;--dark:#1A0F05;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--panel:#FFFFFF;--border:#EDE0CF;--text:#3D2408;--muted:#8A7060;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--green:#1A7A3C;--red:#CC2200;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--shadow:0 2px 16px rgba(60,20,0,0.10);</p>
+<p class="p1">}</p>
+<p class="p1">html{background:#F5ECD8;scroll-behavior:smooth;}</p>
+<p class="p1">body{font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;background:#F5ECD8;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── HERO ── */</p>
+<p class="p1">.hero{background:var(--dark);padding:1.5rem 1.2rem 1.2rem;text-align:center;position:relative;overflow:hidden;}</p>
+<p class="p1">.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 120%,rgba(232,52,10,0.3),transparent 70%);pointer-events:none;}</p>
+<p class="p1">.hero-fire{font-size:2rem;display:block;margin-bottom:0.3rem;}</p>
+<p class="p1">.hero-name{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:0.1em;color:#FDF6ED;line-height:1;margin-bottom:0.15rem;}</p>
+<p class="p1">.hero-name span{color:var(--fire);}</p>
+<p class="p1">.hero-tag{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(253,246,237,0.45);margin-bottom:0.5rem;}</p>
+<p class="p1">.hero-loc{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:0.22rem 0.65rem;border-radius:20px;font-size:0.7rem;color:rgba(253,246,237,0.6);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── DIET TOGGLE ── */</p>
+<p class="p1">.diet-wrap{background:#FDF6ED;border-bottom:1px solid var(--border);padding:0.75rem 1.2rem;}</p>
+<p class="p1">.diet-toggle{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;}</p>
+<p class="p1">.dt-opt{padding:0.55rem;text-align:center;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.2s;color:var(--muted);background:transparent;}</p>
+<p class="p1">.dt-opt.act.nv{background:var(--fire);color:#fff;}</p>
+<p class="p1">.dt-opt.act.vg{background:var(--green);color:#fff;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── SECTION ── */</p>
+<p class="p1">.section{padding:1rem 1.2rem 0;}</p>
+<p class="p1">.sec-title{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.08em;color:var(--dark);margin-bottom:0.65rem;display:flex;align-items:center;gap:0.4rem;}</p>
+<p class="p1">.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── MENU CARDS ── */</p>
+<p class="p1">.menu-grid{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.5rem;}</p>
+<p class="p1">.menu-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:0.75rem 0.9rem;display:flex;align-items:center;gap:0.7rem;box-shadow:var(--shadow);transition:all 0.18s;}</p>
+<p class="p1">.mc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}</p>
+<p class="p1">.mc-dot.nv{background:var(--fire);border:1.5px solid #C02000;}</p>
+<p class="p1">.mc-dot.vg{background:var(--green);border:1.5px solid #0F6030;}</p>
+<p class="p1">.mc-info{flex:1;min-width:0;}</p>
+<p class="p1">.mc-name{font-size:0.88rem;font-weight:600;color:var(--dark);margin-bottom:0.08rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}</p>
+<p class="p1">.mc-desc{font-size:0.65rem;color:var(--muted);line-height:1.4;}</p>
+<p class="p1">.mc-price{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;color:var(--gold);letter-spacing:0.04em;flex-shrink:0;margin-right:0.4rem;}</p>
+<p class="p1">.mc-qty{display:flex;align-items:center;gap:0;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;flex-shrink:0;}</p>
+<p class="p1">.mqb{background:transparent;border:none;color:var(--muted);width:30px;height:30px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}</p>
+<p class="p1">.mqb:active{background:#F5ECD8;}</p>
+<p class="p1">.mqb.add{color:var(--fire);}</p>
+<p class="p1">.mqn{font-size:0.8rem;font-weight:600;min-width:22px;text-align:center;color:var(--dark);}</p>
+<p class="p1">.menu-card.in-cart{border-color:var(--fire);background:linear-gradient(135deg,#FFF8F5,#FFFFFF);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── CUSTOMER INFO ── */</p>
+<p class="p1">.cust-section{padding:1rem 1.2rem;}</p>
+<p class="p1">.ci-field{margin-bottom:0.6rem;}</p>
+<p class="p1">.ci-lbl{font-size:0.7rem;font-weight:600;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.3rem;display:block;}</p>
+<p class="p1">.ci-inp{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.85rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;transition:border-color 0.15s;}</p>
+<p class="p1">.ci-inp:focus{border-color:var(--fire);}</p>
+<p class="p1">.ci-inp::placeholder{color:#C0B0A0;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── ORDER SUMMARY ── */</p>
+<p class="p1">.summary-bar{margin:0 1.2rem 0.8rem;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:0.75rem;box-shadow:var(--shadow);}</p>
+<p class="p1">.sb-row{display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:0.2rem;color:var(--muted);}</p>
+<p class="p1">.sb-total{display:flex;justify-content:space-between;padding-top:0.5rem;border-top:1px dashed var(--border);margin-top:0.3rem;}</p>
+<p class="p1">.sb-total span:first-child{font-weight:600;font-size:0.9rem;color:var(--dark);}</p>
+<p class="p1">.sb-total span:last-child{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--fire);letter-spacing:0.04em;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── PLACE BTN ── */</p>
+<p class="p1">.place-wrap{padding:0 1.2rem 2rem;}</p>
+<p class="p1">.place-btn{width:100%;background:var(--fire);border:none;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:0.15em;padding:0.9rem;border-radius:10px;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px rgba(232,52,10,0.35);}</p>
+<p class="p1">.place-btn:active{transform:scale(0.98);}</p>
+<p class="p1">.place-btn:disabled{background:#C0B0A0;box-shadow:none;cursor:not-allowed;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── SUCCESS MODAL ── */</p>
+<p class="p1">.modal-bg{position:fixed;inset:0;background:rgba(26,15,5,0.75);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:1.5rem;}</p>
+<p class="p1">.modal-bg.show{display:flex;}</p>
+<p class="p1">.modal{background:var(--panel);border-radius:16px;padding:2rem 1.5rem;text-align:center;max-width:340px;width:100%;animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}</p>
+<p class="p1">@keyframes popIn{from{transform:scale(0.7);opacity:0;}to{transform:scale(1);opacity:1;}}</p>
+<p class="p1">.modal-fire{font-size:2.5rem;margin-bottom:0.5rem;}</p>
+<p class="p1">.modal-tok{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--fire);letter-spacing:0.1em;line-height:1;}</p>
+<p class="p1">.modal-title{font-size:1rem;font-weight:600;color:var(--dark);margin:0.4rem 0 0.15rem;}</p>
+<p class="p1">.modal-sub{font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:1.2rem;}</p>
+<p class="p1">.modal-track{background:#F5ECD8;border-radius:10px;padding:0.8rem;margin-bottom:1.2rem;}</p>
+<p class="p1">.track-steps{display:flex;justify-content:space-between;position:relative;}</p>
+<p class="p1">.track-steps::before{content:'';position:absolute;top:14px;left:14px;right:14px;height:2px;background:var(--border);}</p>
+<p class="p1">.ts{display:flex;flex-direction:column;align-items:center;gap:0.25rem;flex:1;position:relative;z-index:1;}</p>
+<p class="p1">.ts-dot{width:28px;height:28px;border-radius:50%;background:#EDE0CF;display:flex;align-items:center;justify-content:center;font-size:0.75rem;transition:all 0.3s;}</p>
+<p class="p1">.ts-dot.act{background:var(--fire);color:#fff;box-shadow:0 0 0 4px rgba(232,52,10,0.15);}</p>
+<p class="p1">.ts-dot.done{background:var(--green);color:#fff;}</p>
+<p class="p1">.ts-lbl{font-size:0.5rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);text-align:center;line-height:1.3;}</p>
+<p class="p1">.modal-close{width:100%;background:var(--dark);color:#fff;border:none;border-radius:8px;padding:0.65rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── PAYMENT ── */</p>
+<p class="p1">.pay-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem;margin-bottom:0.6rem;}</p>
+<p class="p1">.pay-opt{border:1.5px solid var(--border);border-radius:8px;padding:0.5rem;text-align:center;cursor:pointer;transition:all 0.15s;}</p>
+<p class="p1">.pay-opt.sel{border-color:var(--fire);background:#FFF3EF;}</p>
+<p class="p1">.pay-opt span{display:block;font-size:0.9rem;margin-bottom:0.15rem;}</p>
+<p class="p1">.pay-opt p{font-size:0.62rem;color:var(--muted);font-weight:600;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── EMPTY STATE ── */</p>
+<p class="p1">.empty{text-align:center;padding:2rem 1rem;color:var(--muted);}</p>
+<p class="p1">.empty-icon{font-size:2.5rem;display:block;margin-bottom:0.5rem;opacity:0.5;}</p>
+<p class="p1">.empty-txt{font-size:0.82rem;}</p>
+<p class="p2"><br></p>
+<p class="p1">.pb{padding-bottom:0.5rem;}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- HERO --&gt;</p>
+<p class="p1">&lt;div class="hero"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;span class="hero-fire"&gt;🌶️&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="hero-name"&gt;Andhra&lt;span&gt;AF&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="hero-tag"&gt;Jubilee Hills Food Court · Hyderabad&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="hero-loc"&gt;📍 Andhra Pradesh Inspired Street Food&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- DIET TOGGLE --&gt;</p>
+<p class="p1">&lt;div class="diet-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="diet-toggle"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="dt-opt nv act" id="dt-nv" onclick="setDiet('nv')"&gt;🍗 Non-Veg&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="dt-opt vg" id="dt-vg" onclick="setDiet('vg')"&gt;🌿 Veg&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- MENU will be injected here by JS --&gt;</p>
+<p class="p1">&lt;div id="menu-root"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- CUSTOMER INFO --&gt;</p>
+<p class="p1">&lt;div class="cust-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="sec-title"&gt;Your Details&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="ci-field"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label class="ci-lbl"&gt;Your Name&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input class="ci-inp" id="ci-name" placeholder="e.g. Priya" maxlength="40"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="ci-field"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label class="ci-lbl"&gt;Phone Number&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input class="ci-inp" id="ci-phone" type="tel" placeholder="+91 XXXXX XXXXX" maxlength="15"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="ci-field"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label class="ci-lbl"&gt;Payment&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="pay-opts"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pay-opt sel" id="pay-upi" onclick="setPay('upi',this)"&gt;&lt;span&gt;📲&lt;/span&gt;&lt;p&gt;UPI&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pay-opt" id="pay-card" onclick="setPay('card',this)"&gt;&lt;span&gt;💳&lt;/span&gt;&lt;p&gt;Card&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pay-opt" id="pay-counter" onclick="setPay('counter',this)"&gt;&lt;span&gt;🏷️&lt;/span&gt;&lt;p&gt;Counter&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="ci-field"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label class="ci-lbl"&gt;Special Requests &lt;span style="font-weight:400;text-transform:none;"&gt;(optional)&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input class="ci-inp" id="ci-notes" placeholder="e.g. Less spicy please" maxlength="100"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- SUMMARY --&gt;</p>
+<p class="p1">&lt;div class="summary-bar" id="summary-bar" style="display:none;"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- PLACE --&gt;</p>
+<p class="p1">&lt;div class="place-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button class="place-btn" id="place-btn" disabled onclick="placeOrder()"&gt;🔥 Place Order&lt;/button&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- SUCCESS MODAL --&gt;</p>
+<p class="p1">&lt;div class="modal-bg" id="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-fire"&gt;🎉&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-tok" id="m-tok"&gt;AF-0000&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-title"&gt;Order Placed! Show this token at pickup.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-sub" id="m-sub"&gt;Preparing your food now.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-track"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="track-steps"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="ts"&gt;&lt;div class="ts-dot act" id="ts0"&gt;✓&lt;/div&gt;&lt;div class="ts-lbl"&gt;Confirmed&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="ts"&gt;&lt;div class="ts-dot" id="ts1"&gt;🍳&lt;/div&gt;&lt;div class="ts-lbl"&gt;Preparing&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="ts"&gt;&lt;div class="ts-dot" id="ts2"&gt;🛎&lt;/div&gt;&lt;div class="ts-lbl"&gt;Ready&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="ts"&gt;&lt;div class="ts-dot" id="ts3"&gt;✅&lt;/div&gt;&lt;div class="ts-lbl"&gt;Picked up&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="modal-close" onclick="closeModal()"&gt;Close &amp; Order More&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script type="module"&gt;</p>
+<p class="p1">// ══════════════════════════════════════════</p>
+<p class="p1">//<span class="Apple-converted-space">  </span>ANDHRA AF — CUSTOMER ORDER PAGE</p>
+<p class="p1">//<span class="Apple-converted-space">  </span>Real-time sync via Firebase Firestore</p>
+<p class="p1">//<span class="Apple-converted-space">  </span>Orders appear on owner dashboard instantly</p>
+<p class="p1">//<span class="Apple-converted-space">  </span>across any device, anywhere in the world</p>
+<p class="p1">// ══════════════════════════════════════════</p>
+<p class="p2"><br></p>
+<p class="p1">import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";</p>
+<p class="p1">import { getFirestore, collection, addDoc, doc, onSnapshot, serverTimestamp }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";</p>
+<p class="p2"><br></p>
+<p class="p1">// ── YOUR FIREBASE CONFIG ─────────────────</p>
+<p class="p1">// 1. Go to console.firebase.google.com</p>
+<p class="p1">// 2. Create project "andhraaF"</p>
+<p class="p1">// 3. Add a Web App → copy the config object here</p>
+<p class="p1">// 4. Firestore Database → Create → Start in test mode</p>
+<p class="p1">const firebaseConfig = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>apiKey: "AIzaSyCb6q295u36k-TjzPhGrZCmIsRc8hPeaLQ",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>authDomain: "andhraaf-87e82.firebaseapp.com",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>projectId: "andhraaf-87e82",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>storageBucket: "andhraaf-87e82.firebasestorage.app",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>messagingSenderId: "28897027976",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>appId: "1:28897027976:web:a98aca6abbd0619185bc3d",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>measurementId: "G-VFXRFY1ZCG"</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">const app = initializeApp(firebaseConfig);</p>
+<p class="p1">const db<span class="Apple-converted-space">  </span>= getFirestore(app);</p>
+<p class="p2"><br></p>
+<p class="p1">// ── DATA ─────────────────────────────────</p>
+<p class="p1">const MENU = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>nv: {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Food: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'f1', name:'Podi-Pop Chicken', <span class="Apple-converted-space">      </span>price:180, desc:'Crispy chicken in Andhra podi masala'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'f2', name:'Avakaya Burger',<span class="Apple-converted-space">          </span>price:220, desc:'Spicy mango pickle chicken burger'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'f4', name:'Gongura Glazed Wings',<span class="Apple-converted-space">    </span>price:249, desc:'Tangy gongura sauce, crispy wings'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'f7', name:'7am Chicken Burrito', <span class="Apple-converted-space">    </span>price:159, desc:'Morning-spice chicken wrap'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'f9', name:'Nizami Keema Knot', <span class="Apple-converted-space">      </span>price:179, desc:'Spiced minced chicken in a pull roll'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'f11','name':'65-Block Burrito',<span class="Apple-converted-space">      </span>price:229, desc:'Chicken 65 meets Andhra spice burrito'},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Drinks: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'d1', name:'Kobbari Caramel Shake', <span class="Apple-converted-space">  </span>price:149, desc:'Coconut-caramel cold shake'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'d3', name:'Godavari Rose Milk Float', price:139, desc:'Rose milk with vanilla float'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'d5', name:'Hyderabad Halkat Soda', <span class="Apple-converted-space">  </span>price:89,<span class="Apple-converted-space">  </span>desc:'Spicy masala soda'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'d8', name:'Chilled-out Majjiga', <span class="Apple-converted-space">    </span>price:79,<span class="Apple-converted-space">  </span>desc:'Cold spiced buttermilk'},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Combos: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'c1', name:'Rayalaseema Heat (Combo)',price:239, desc:'Podi Pop + Halkat Soda + Fries'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'c3', name:'Midnight Masala Combo', <span class="Apple-converted-space">  </span>price:289, desc:'Wings + Rose Float + Fries'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'c7', name:'The All-Nighter', <span class="Apple-converted-space">        </span>price:349, desc:'Burrito + Burger + 2 Drinks'},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>vg: {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Food: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'v1', name:'Gobi Gunpowder Poppers',<span class="Apple-converted-space">  </span>price:169, desc:'Crispy cauliflower in podi masala'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'v2', name:'Avakaya Paneer Smash',<span class="Apple-converted-space">    </span>price:209, desc:'Mango pickle paneer burger'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'v4', name:'Gongura Cauliflower Wings',price:229,desc:'Tangy gongura cauliflower'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'v7', name:'Paneer Burji Burrito',<span class="Apple-converted-space">    </span>price:149, desc:'Spiced paneer scramble wrap'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'v9', name:'Rajma Nizami Knot', <span class="Apple-converted-space">      </span>price:169, desc:'Slow-cooked rajma pull roll'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'v10','name':'Tikka-Falafel Fusion',<span class="Apple-converted-space">  </span>price:199, desc:'Andhra spiced falafel patty'},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Drinks: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'d1', name:'Kobbari Caramel Shake', <span class="Apple-converted-space">  </span>price:149, desc:'Coconut-caramel cold shake'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'d3', name:'Godavari Rose Milk Float', price:139, desc:'Rose milk with vanilla float'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'d5', name:'Hyderabad Halkat Soda', <span class="Apple-converted-space">  </span>price:89,<span class="Apple-converted-space">  </span>desc:'Spicy masala soda'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'d8', name:'Chilled-out Majjiga', <span class="Apple-converted-space">    </span>price:79,<span class="Apple-converted-space">  </span>desc:'Cold spiced buttermilk'},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Combos: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'vc1', name:'The Green Rayalaseema',<span class="Apple-converted-space">  </span>price:219, desc:'Gobi Poppers + Majjiga + Fries'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'vc2', name:'Garden Cinema Combo',<span class="Apple-converted-space">    </span>price:289, desc:'Paneer Smash + Rose Float + Fries'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{id:'vc4', name:'Rajma All-Nighter',<span class="Apple-converted-space">      </span>price:279, desc:'Rajma Knot + Burrito + 2 Drinks'},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">// Ingredient map for inventory</p>
+<p class="p1">const ING_MAP = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>f1:{chicken_breast:150},f2:{chicken_breast:120,bread_buns:1},f4:{chicken_wings:200,gongura:30},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>f7:{chicken_breast:100,tortilla:1},f9:{chicken_breast:130},f11:{chicken_breast:150},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>v1:{cauliflower:200},v2:{paneer:120,bread_buns:1},v4:{cauliflower:220,gongura:30},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>v7:{paneer:130,tortilla:1},v9:{rajma:150},v10:{dal:80},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c1:{chicken_breast:150},c3:{chicken_wings:200},c7:{chicken_breast:150},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>vc1:{cauliflower:200},vc2:{paneer:120},vc4:{rajma:150},</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">let diet = 'nv';</p>
+<p class="p1">let cart = {};</p>
+<p class="p1">let payment = 'upi';</p>
+<p class="p1">let orderCount = parseInt(sessionStorage.getItem('aaf_ordercount') || '0');</p>
+<p class="p1">let currentOrderToken = null;</p>
+<p class="p1">let unsubscribeTracker = null;</p>
+<p class="p2"><br></p>
+<p class="p1">function setDiet(d){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>diet = d;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>cart = {};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('dt-nv').className = 'dt-opt nv' + (d==='nv'?' act':'');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('dt-vg').className = 'dt-opt vg' + (d==='vg'?' act':'');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderMenu();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>updateSummary();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function setPay(p, el){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>payment = p;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.pay-opt').forEach(x =&gt; x.classList.remove('sel'));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.classList.add('sel');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function adj(id, delta){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!cart[id]) cart[id] = 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>cart[id] = Math.max(0, cart[id] + delta);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(cart[id] === 0) delete cart[id];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>updateCardQty(id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>updateSummary();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function updateCardQty(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el = document.getElementById('mc-' + id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!el) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const qty = cart[id] || 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.querySelector('.mqn').textContent = qty;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.classList.toggle('in-cart', qty &gt; 0);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderMenu(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const root = document.getElementById('menu-root');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>root.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cats = MENU[diet];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Object.entries(cats).forEach(([cat, items]) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const sec = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sec.className = 'section pb';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let html = `&lt;div class="sec-title"&gt;${cat}&lt;/div&gt;&lt;div class="menu-grid"&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>items.forEach(item =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const qty = cart[item.id] || 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>html += `</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="menu-card${qty&gt;0?' in-cart':''}" id="mc-${item.id}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="mc-dot ${diet}"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="mc-info"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mc-name"&gt;${item.name}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mc-desc"&gt;${item.desc}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="mc-price"&gt;₹${item.price}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="mc-qty"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="mqb" onclick="adj('${item.id}',-1)"&gt;−&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="mqn"&gt;${qty}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="mqb add" onclick="adj('${item.id}',1)"&gt;+&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += '&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sec.innerHTML = html;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>root.appendChild(sec);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function getAllItems(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cats = MENU[diet];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const all = Object.values(cats).flat();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return Object.entries(cart).map(([id, qty]) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const item = all.find(i =&gt; i.id === id);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return item ? { ...item, qty, diet } : null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}).filter(Boolean);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function updateSummary(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const items = getAllItems();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const bar = document.getElementById('summary-bar');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const btn = document.getElementById('place-btn');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!items.length){ bar.style.display='none'; btn.disabled=true; return; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const sub = items.reduce((s,i) =&gt; s+i.price*i.qty, 0);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const tax = Math.round(sub * 0.05);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const grand = sub + tax;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>bar.style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>bar.innerHTML = items.map(i =&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`&lt;div class="sb-row"&gt;&lt;span&gt;${i.name} ×${i.qty}&lt;/span&gt;&lt;span&gt;₹${i.price*i.qty}&lt;/span&gt;&lt;/div&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">  </span>).join('') +</p>
+<p class="p1"><span class="Apple-converted-space">  </span>`&lt;div class="sb-row"&gt;&lt;span&gt;GST (5%)&lt;/span&gt;&lt;span&gt;₹${tax}&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">   </span>&lt;div class="sb-total"&gt;&lt;span&gt;Total&lt;/span&gt;&lt;span&gt;₹${grand}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.disabled = false;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function placeOrder(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const name = document.getElementById('ci-name').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const phone = document.getElementById('ci-phone').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const notes = document.getElementById('ci-notes').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!name){ document.getElementById('ci-name').focus(); alert('Please enter your name'); return; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const items = getAllItems();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!items.length) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const btn = document.getElementById('place-btn');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.disabled = true;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.textContent = '⏳ Placing...';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const sub = items.reduce((s,i) =&gt; s+i.price*i.qty, 0);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const tax = Math.round(sub * 0.05);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const grand = sub + tax;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>orderCount++;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>sessionStorage.setItem('aaf_ordercount', orderCount);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const token = 'AF-' + String(1000 + orderCount);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Build ingredient usage</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let ingUsage = {};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>items.forEach(item =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const ings = ING_MAP[item.id] || {};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Object.entries(ings).forEach(([k,v]) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ingUsage[k] = (ingUsage[k]||0) + v * item.qty;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const order = {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>token,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>name: name || 'Customer',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>phone,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>items,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>subtotal: sub,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tax,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>grand,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>payment,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>notes,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>diet,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>status: 'new',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>placedAt: Date.now(),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>placedAtServer: serverTimestamp(),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>eta: 15,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ingUsage,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// ── WRITE TO FIRESTORE ────────────────</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Owner dashboard gets this in real time via onSnapshot listener</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const docRef = await addDoc(collection(db, 'orders'), order);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>currentOrderToken = token;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Show success modal</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('m-tok').textContent = token;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('m-sub').textContent =</p>
+<p class="p1"><span class="Apple-converted-space">      </span>`${items.map(i=&gt;i.name+' ×'+i.qty).join(', ')} · ₹${grand} · ${payment.toUpperCase()}`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('modal').classList.add('show');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Live-track this order's status from Firestore</p>
+<p class="p1"><span class="Apple-converted-space">    </span>startLiveTracking(docRef.id);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Reset cart</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cart = {};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>renderMenu();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>updateSummary();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('ci-name').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('ci-phone').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('ci-notes').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} catch(err) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>alert('Could not place order — please check your connection and try again.\n\n' + err.message);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>console.error(err);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.disabled = false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.textContent = '🔥 Place Order';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ── LIVE ORDER TRACKING ─────────────────</p>
+<p class="p1">// Listens to Firestore doc in real time —</p>
+<p class="p1">// when owner marks "Preparing/Ready/Done",</p>
+<p class="p1">// the customer's tracking dots update instantly</p>
+<p class="p1">function startLiveTracking(docId){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(unsubscribeTracker) unsubscribeTracker();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Reset dots</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for(let i=0;i&lt;4;i++){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const d = document.getElementById('ts'+i);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(d) d.className = 'ts-dot' + (i===0?' done':'');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const orderRef = doc(db, 'orders', docId);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>unsubscribeTracker = onSnapshot(orderRef, snap =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(!snap.exists()) return;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const s = snap.data().status;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const stepMap = {new:0, preparing:1, ready:2, done:3};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const cur = stepMap[s] ?? 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>for(let i=0;i&lt;4;i++){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const d = document.getElementById('ts'+i);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(d) d.className = 'ts-dot' + (i&lt;cur?' done':i===cur?' act':'');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function closeModal(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal').classList.remove('show');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Keep tracking running so customer can re-open and still see status</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Init</p>
+<p class="p1">renderMenu();</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>
