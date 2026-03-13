@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Andhra AF — Order Now 🌶️</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --fire:#E8340A;--gold:#C8881A;--cream:#FDF6ED;--dark:#1A0F05;
+  --panel:#FFFFFF;--border:#EDE0CF;--text:#3D2408;--muted:#8A7060;
+  --green:#1A7A3C;--red:#CC2200;
+  --shadow:0 2px 16px rgba(60,20,0,0.10);
+}
+html{background:#F5ECD8;scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;background:#F5ECD8;}
+
+/* ── HERO ── */
+.hero{background:var(--dark);padding:1.5rem 1.2rem 1.2rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 120%,rgba(232,52,10,0.3),transparent 70%);pointer-events:none;}
+.hero-fire{font-size:2rem;display:block;margin-bottom:0.3rem;}
+.hero-name{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:0.1em;color:#FDF6ED;line-height:1;margin-bottom:0.15rem;}
+.hero-name span{color:var(--fire);}
+.hero-tag{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(253,246,237,0.45);margin-bottom:0.5rem;}
+.hero-loc{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:0.22rem 0.65rem;border-radius:20px;font-size:0.7rem;color:rgba(253,246,237,0.6);}
+
+/* ── DIET TOGGLE ── */
+.diet-wrap{background:#FDF6ED;border-bottom:1px solid var(--border);padding:0.75rem 1.2rem;}
+.diet-toggle{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;}
+.dt-opt{padding:0.55rem;text-align:center;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.2s;color:var(--muted);background:transparent;}
+.dt-opt.act.nv{background:var(--fire);color:#fff;}
+.dt-opt.act.vg{background:var(--green);color:#fff;}
+
+/* ── SECTION ── */
+.section{padding:1rem 1.2rem 0;}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.08em;color:var(--dark);margin-bottom:0.65rem;display:flex;align-items:center;gap:0.4rem;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── MENU CARDS ── */
+.menu-grid{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.5rem;}
+.menu-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:0.75rem 0.9rem;display:flex;align-items:center;gap:0.7rem;box-shadow:var(--shadow);transition:all 0.18s;}
+.mc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.mc-dot.nv{background:var(--fire);border:1.5px solid #C02000;}
+.mc-dot.vg{background:var(--green);border:1.5px solid #0F6030;}
+.mc-info{flex:1;min-width:0;}
+.mc-name{font-size:0.88rem;font-weight:600;color:var(--dark);margin-bottom:0.08rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mc-desc{font-size:0.65rem;color:var(--muted);line-height:1.4;}
+.mc-price{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;color:var(--gold);letter-spacing:0.04em;flex-shrink:0;margin-right:0.4rem;}
+.mc-qty{display:flex;align-items:center;gap:0;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;flex-shrink:0;}
+.mqb{background:transparent;border:none;color:var(--muted);width:30px;height:30px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.mqb:active{background:#F5ECD8;}
+.mqb.add{color:var(--fire);}
+.mqn{font-size:0.8rem;font-weight:600;min-width:22px;text-align:center;color:var(--dark);}
+.menu-card.in-cart{border-color:var(--fire);background:linear-gradient(135deg,#FFF8F5,#FFFFFF);}
+
+/* ── CUSTOMER INFO ── */
+.cust-section{padding:1rem 1.2rem;}
+.ci-field{margin-bottom:0.6rem;}
+.ci-lbl{font-size:0.7rem;font-weight:600;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.3rem;display:block;}
+.ci-inp{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.85rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;transition:border-color 0.15s;}
+.ci-inp:focus{border-color:var(--fire);}
+.ci-inp::placeholder{color:#C0B0A0;}
+
+/* ── ORDER SUMMARY ── */
+.summary-bar{margin:0 1.2rem 0.8rem;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:0.75rem;box-shadow:var(--shadow);}
+.sb-row{display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:0.2rem;color:var(--muted);}
+.sb-total{display:flex;justify-content:space-between;padding-top:0.5rem;border-top:1px dashed var(--border);margin-top:0.3rem;}
+.sb-total span:first-child{font-weight:600;font-size:0.9rem;color:var(--dark);}
+.sb-total span:last-child{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--fire);letter-spacing:0.04em;}
+
+/* ── PLACE BTN ── */
+.place-wrap{padding:0 1.2rem 2rem;}
+.place-btn{width:100%;background:var(--fire);border:none;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:0.15em;padding:0.9rem;border-radius:10px;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px rgba(232,52,10,0.35);}
+.place-btn:active{transform:scale(0.98);}
+.place-btn:disabled{background:#C0B0A0;box-shadow:none;cursor:not-allowed;}
+
+/* ── SUCCESS MODAL ── */
+.modal-bg{position:fixed;inset:0;background:rgba(26,15,5,0.75);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:1.5rem;}
+.modal-bg.show{display:flex;}
+.modal{background:var(--panel);border-radius:16px;padding:2rem 1.5rem;text-align:center;max-width:340px;width:100%;animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes popIn{from{transform:scale(0.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+.modal-fire{font-size:2.5rem;margin-bottom:0.5rem;}
+.modal-tok{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--fire);letter-spacing:0.1em;line-height:1;}
+.modal-title{font-size:1rem;font-weight:600;color:var(--dark);margin:0.4rem 0 0.15rem;}
+.modal-sub{font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:1.2rem;}
+.modal-track{background:#F5ECD8;border-radius:10px;padding:0.8rem;margin-bottom:1.2rem;}
+.track-steps{display:flex;justify-content:space-between;position:relative;}
+.track-steps::before{content:'';position:absolute;top:14px;left:14px;right:14px;height:2px;background:var(--border);}
+.ts{display:flex;flex-direction:column;align-items:center;gap:0.25rem;flex:1;position:relative;z-index:1;}
+.ts-dot{width:28px;height:28px;border-radius:50%;background:#EDE0CF;display:flex;align-items:center;justify-content:center;font-size:0.75rem;transition:all 0.3s;}
+.ts-dot.act{background:var(--fire);color:#fff;box-shadow:0 0 0 4px rgba(232,52,10,0.15);}
+.ts-dot.done{background:var(--green);color:#fff;}
+.ts-lbl{font-size:0.5rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);text-align:center;line-height:1.3;}
+.modal-close{width:100%;background:var(--dark);color:#fff;border:none;border-radius:8px;padding:0.65rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;}
+
+/* ── PAYMENT ── */
+.pay-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem;margin-bottom:0.6rem;}
+.pay-opt{border:1.5px solid var(--border);border-radius:8px;padding:0.5rem;text-align:center;cursor:pointer;transition:all 0.15s;}
+.pay-opt.sel{border-color:var(--fire);background:#FFF3EF;}
+.pay-opt span{display:block;font-size:0.9rem;margin-bottom:0.15rem;}
+.pay-opt p{font-size:0.62rem;color:var(--muted);font-weight:600;}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:2rem 1rem;color:var(--muted);}
+.empty-icon{font-size:2.5rem;display:block;margin-bottom:0.5rem;opacity:0.5;}
+.empty-txt{font-size:0.82rem;}
+
+.pb{padding-bottom:0.5rem;}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-fire">🌶️</span>
+  <div class="hero-name">Andhra<span>AF</span></div>
+  <div class="hero-tag">Jubilee Hills Food Court · Hyderabad</div>
+  <div class="hero-loc">📍 Andhra Pradesh Inspired Street Food</div>
+</div>
+
+<!-- DIET TOGGLE -->
+<div class="diet-wrap">
+  <div class="diet-toggle">
+    <div class="dt-opt nv act" id="dt-nv" onclick="setDiet('nv')">🍗 Non-Veg</div>
+    <div class="dt-opt vg" id="dt-vg" onclick="setDiet('vg')">🌿 Veg</div>
+  </div>
+</div>
+
+<!-- MENU will be injected here by JS -->
+<div id="menu-root"></div>
+
+<!-- CUSTOMER INFO -->
+<div class="cust-section">
+  <div class="sec-title">Your Details</div>
+  <div class="ci-field">
+    <label class="ci-lbl">Your Name</label>
+    <input class="ci-inp" id="ci-name" placeholder="e.g. Priya" maxlength="40"/>
+  </div>
+  <div class="ci-field">
+    <label class="ci-lbl">Phone Number</label>
+    <input class="ci-inp" id="ci-phone" type="tel" placeholder="+91 XXXXX XXXXX" maxlength="15"/>
+  </div>
+  <div class="ci-field">
+    <label class="ci-lbl">Payment</label>
+    <div class="pay-opts">
+      <div class="pay-opt sel" id="pay-upi" onclick="setPay('upi',this)"><span>📲</span><p>UPI</p></div>
+      <div class="pay-opt" id="pay-card" onclick="setPay('card',this)"><span>💳</span><p>Card</p></div>
+      <div class="pay-opt" id="pay-counter" onclick="setPay('counter',this)"><span>🏷️</span><p>Counter</p></div>
+    </div>
+  </div>
+  <div class="ci-field">
+    <label class="ci-lbl">Special Requests <span style="font-weight:400;text-transform:none;">(optional)</span></label>
+    <input class="ci-inp" id="ci-notes" placeholder="e.g. Less spicy please" maxlength="100"/>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary-bar" id="summary-bar" style="display:none;"></div>
+
+<!-- PLACE -->
+<div class="place-wrap">
+  <button class="place-btn" id="place-btn" disabled onclick="placeOrder()">🔥 Place Order</button>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <div class="modal-fire">🎉</div>
+    <div class="modal-tok" id="m-tok">AF-0000</div>
+    <div class="modal-title">Order Placed! Show this token at pickup.</div>
+    <div class="modal-sub" id="m-sub">Preparing your food now.</div>
+    <div class="modal-track">
+      <div class="track-steps">
+        <div class="ts"><div class="ts-dot act" id="ts0">✓</div><div class="ts-lbl">Confirmed</div></div>
+        <div class="ts"><div class="ts-dot" id="ts1">🍳</div><div class="ts-lbl">Preparing</div></div>
+        <div class="ts"><div class="ts-dot" id="ts2">🛎</div><div class="ts-lbl">Ready</div></div>
+        <div class="ts"><div class="ts-dot" id="ts3">✅</div><div class="ts-lbl">Picked up</div></div>
+      </div>
+    </div>
+    <button class="modal-close" onclick="closeModal()">Close & Order More</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  ANDHRA AF — CUSTOMER ORDER PAGE
+//  Shares orders via localStorage + BroadcastChannel
+//  so owner dashboard receives them in real time
+// ══════════════════════════════════════════
+
+const MENU = {
+  nv: {
+    Food: [
+      {id:'f1', name:'Podi-Pop Chicken',       price:180, desc:'Crispy chicken in Andhra podi masala'},
+      {id:'f2', name:'Avakaya Burger',          price:220, desc:'Spicy mango pickle chicken burger'},
+      {id:'f4', name:'Gongura Glazed Wings',    price:249, desc:'Tangy gongura sauce, crispy wings'},
+      {id:'f7', name:'7am Chicken Burrito',     price:159, desc:'Morning-spice chicken wrap'},
+      {id:'f9', name:'Nizami Keema Knot',       price:179, desc:'Spiced minced chicken in a pull roll'},
+      {id:'f11','name':'65-Block Burrito',      price:229, desc:'Chicken 65 meets Andhra spice burrito'},
+    ],
+    Drinks: [
+      {id:'d1', name:'Kobbari Caramel Shake',   price:149, desc:'Coconut-caramel cold shake'},
+      {id:'d3', name:'Godavari Rose Milk Float', price:139, desc:'Rose milk with vanilla float'},
+      {id:'d5', name:'Hyderabad Halkat Soda',   price:89,  desc:'Spicy masala soda'},
+      {id:'d8', name:'Chilled-out Majjiga',     price:79,  desc:'Cold spiced buttermilk'},
+    ],
+    Combos: [
+      {id:'c1', name:'Rayalaseema Heat (Combo)',price:239, desc:'Podi Pop + Halkat Soda + Fries'},
+      {id:'c3', name:'Midnight Masala Combo',   price:289, desc:'Wings + Rose Float + Fries'},
+      {id:'c7', name:'The All-Nighter',         price:349, desc:'Burrito + Burger + 2 Drinks'},
+    ]
+  },
+  vg: {
+    Food: [
+      {id:'v1', name:'Gobi Gunpowder Poppers',  price:169, desc:'Crispy cauliflower in podi masala'},
+      {id:'v2', name:'Avakaya Paneer Smash',    price:209, desc:'Mango pickle paneer burger'},
+      {id:'v4', name:'Gongura Cauliflower Wings',price:229,desc:'Tangy gongura cauliflower'},
+      {id:'v7', name:'Paneer Burji Burrito',    price:149, desc:'Spiced paneer scramble wrap'},
+      {id:'v9', name:'Rajma Nizami Knot',       price:169, desc:'Slow-cooked rajma pull roll'},
+      {id:'v10','name':'Tikka-Falafel Fusion',  price:199, desc:'Andhra spiced falafel patty'},
+    ],
+    Drinks: [
+      {id:'d1', name:'Kobbari Caramel Shake',   price:149, desc:'Coconut-caramel cold shake'},
+      {id:'d3', name:'Godavari Rose Milk Float', price:139, desc:'Rose milk with vanilla float'},
+      {id:'d5', name:'Hyderabad Halkat Soda',   price:89,  desc:'Spicy masala soda'},
+      {id:'d8', name:'Chilled-out Majjiga',     price:79,  desc:'Cold spiced buttermilk'},
+    ],
+    Combos: [
+      {id:'vc1', name:'The Green Rayalaseema',  price:219, desc:'Gobi Poppers + Majjiga + Fries'},
+      {id:'vc2', name:'Garden Cinema Combo',    price:289, desc:'Paneer Smash + Rose Float + Fries'},
+      {id:'vc4', name:'Rajma All-Nighter',      price:279, desc:'Rajma Knot + Burrito + 2 Drinks'},
+    ]
+  }
+};
+
+// Ingredient map for inventory
+const ING_MAP = {
+  f1:{chicken_breast:150},f2:{chicken_breast:120,bread_buns:1},f4:{chicken_wings:200,gongura:30},
+  f7:{chicken_breast:100,tortilla:1},f9:{chicken_breast:130},f11:{chicken_breast:150},
+  v1:{cauliflower:200},v2:{paneer:120,bread_buns:1},v4:{cauliflower:220,gongura:30},
+  v7:{paneer:130,tortilla:1},v9:{rajma:150},v10:{dal:80},
+  c1:{chicken_breast:150},c3:{chicken_wings:200},c7:{chicken_breast:150},
+  vc1:{cauliflower:200},vc2:{paneer:120},vc4:{rajma:150},
+};
+
+let diet = 'nv';
+let cart = {};
+let payment = 'upi';
+let orderCount = parseInt(localStorage.getItem('aaf_ordercount') || '0');
+
+// BroadcastChannel so owner page hears orders instantly (same browser)
+let bc;
+try { bc = new BroadcastChannel('andhraaF_orders'); } catch(e) {}
+
+function setDiet(d){
+  diet = d;
+  cart = {};
+  document.getElementById('dt-nv').className = 'dt-opt nv' + (d==='nv'?' act':'');
+  document.getElementById('dt-vg').className = 'dt-opt vg' + (d==='vg'?' act':'');
+  renderMenu();
+  updateSummary();
+}
+
+function setPay(p, el){
+  payment = p;
+  document.querySelectorAll('.pay-opt').forEach(x => x.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function adj(id, delta){
+  if(!cart[id]) cart[id] = 0;
+  cart[id] = Math.max(0, cart[id] + delta);
+  if(cart[id] === 0) delete cart[id];
+  updateCardQty(id);
+  updateSummary();
+}
+
+function updateCardQty(id){
+  const el = document.getElementById('mc-' + id);
+  if(!el) return;
+  const qty = cart[id] || 0;
+  el.querySelector('.mqn').textContent = qty;
+  el.classList.toggle('in-cart', qty > 0);
+}
+
+function renderMenu(){
+  const root = document.getElementById('menu-root');
+  root.innerHTML = '';
+  const cats = MENU[diet];
+  Object.entries(cats).forEach(([cat, items]) => {
+    const sec = document.createElement('div');
+    sec.className = 'section pb';
+    let html = `<div class="sec-title">${cat}</div><div class="menu-grid">`;
+    items.forEach(item => {
+      const qty = cart[item.id] || 0;
+      html += `
+        <div class="menu-card${qty>0?' in-cart':''}" id="mc-${item.id}">
+          <div class="mc-dot ${diet}"></div>
+          <div class="mc-info">
+            <div class="mc-name">${item.name}</div>
+            <div class="mc-desc">${item.desc}</div>
+          </div>
+          <div class="mc-price">₹${item.price}</div>
+          <div class="mc-qty">
+            <button class="mqb" onclick="adj('${item.id}',-1)">−</button>
+            <span class="mqn">${qty}</span>
+            <button class="mqb add" onclick="adj('${item.id}',1)">+</button>
+          </div>
+        </div>`;
+    });
+    html += '</div>';
+    sec.innerHTML = html;
+    root.appendChild(sec);
+  });
+}
+
+function getAllItems(){
+  const cats = MENU[diet];
+  const all = Object.values(cats).flat();
+  return Object.entries(cart).map(([id, qty]) => {
+    const item = all.find(i => i.id === id);
+    return item ? { ...item, qty, diet } : null;
+  }).filter(Boolean);
+}
+
+function updateSummary(){
+  const items = getAllItems();
+  const bar = document.getElementById('summary-bar');
+  const btn = document.getElementById('place-btn');
+  if(!items.length){ bar.style.display='none'; btn.disabled=true; return; }
+  const sub = items.reduce((s,i) => s+i.price*i.qty, 0);
+  const tax = Math.round(sub * 0.05);
+  const grand = sub + tax;
+  bar.style.display = 'block';
+  bar.innerHTML = items.map(i =>
+    `<div class="sb-row"><span>${i.name} ×${i.qty}</span><span>₹${i.price*i.qty}</span></div>`
+  ).join('') +
+  `<div class="sb-row"><span>GST (5%)</span><span>₹${tax}</span></div>
+   <div class="sb-total"><span>Total</span><span>₹${grand}</span></div>`;
+  btn.disabled = false;
+}
+
+function placeOrder(){
+  const name = document.getElementById('ci-name').value.trim();
+  const phone = document.getElementById('ci-phone').value.trim();
+  const notes = document.getElementById('ci-notes').value.trim();
+  if(!name){ document.getElementById('ci-name').focus(); alert('Please enter your name'); return; }
+
+  const items = getAllItems();
+  if(!items.length) return;
+
+  const sub = items.reduce((s,i) => s+i.price*i.qty, 0);
+  const tax = Math.round(sub * 0.05);
+  const grand = sub + tax;
+
+  orderCount++;
+  localStorage.setItem('aaf_ordercount', orderCount);
+  const token = 'AF-' + String(1000 + orderCount);
+
+  // Build ingredient usage
+  let ingUsage = {};
+  items.forEach(item => {
+    const ings = ING_MAP[item.id] || {};
+    Object.entries(ings).forEach(([k,v]) => {
+      ingUsage[k] = (ingUsage[k]||0) + v * item.qty;
+    });
+  });
+
+  const order = {
+    id: Date.now(),
+    token,
+    name: name || 'Customer',
+    phone,
+    items,
+    subtotal: sub,
+    tax,
+    grand,
+    payment,
+    notes,
+    diet,
+    status: 'new',
+    placedAt: Date.now(),
+    eta: 15, // minutes
+    ingUsage,
+  };
+
+  // Save to localStorage so owner page can read
+  const existing = JSON.parse(localStorage.getItem('aaf_orders') || '[]');
+  existing.unshift(order);
+  localStorage.setItem('aaf_orders', JSON.stringify(existing.slice(0, 50)));
+
+  // Broadcast to owner page
+  try { if(bc) bc.postMessage({ type: 'NEW_ORDER', order }); } catch(e){}
+
+  // Show success modal
+  document.getElementById('m-tok').textContent = token;
+  document.getElementById('m-sub').textContent =
+    `${items.map(i=>i.name+' ×'+i.qty).join(', ')} · ₹${grand} · ${payment.toUpperCase()}`;
+  document.getElementById('modal').classList.add('show');
+
+  // Animate tracking
+  simulateTracking(order);
+
+  // Reset cart
+  cart = {};
+  renderMenu();
+  updateSummary();
+  document.getElementById('ci-name').value = '';
+  document.getElementById('ci-phone').value = '';
+  document.getElementById('ci-notes').value = '';
+}
+
+let trackInterval;
+function simulateTracking(order){
+  // Reset dots
+  for(let i=0;i<4;i++){
+    document.getElementById('ts'+i).className='ts-dot'+(i===0?' done':'');
+  }
+  let step = 1;
+  clearInterval(trackInterval);
+  // Try to listen for status updates from owner page
+  const checkStatus = () => {
+    const orders = JSON.parse(localStorage.getItem('aaf_orders') || '[]');
+    const live = orders.find(o => o.token === order.token);
+    if(live){
+      const s = live.status;
+      const stepMap = {new:0,preparing:1,ready:2,done:3};
+      const sStep = stepMap[s] ?? 0;
+      for(let i=0;i<4;i++){
+        const dot = document.getElementById('ts'+i);
+        if(dot) dot.className='ts-dot'+(i<sStep?'done':i===sStep?'act':'');
+      }
+    }
+  };
+  trackInterval = setInterval(checkStatus, 2000);
+}
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+  clearInterval(trackInterval);
+}
+
+// Init
+renderMenu();
+</script>
+</body>
+</html>
